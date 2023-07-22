@@ -16,21 +16,28 @@ SCREEN_TITLE = "SwarmBot Simulator"
 ROBOT_SPEED = 1
 NUMBER_OF_ROBOTS = 30
 
+DEFAULT_LINE_HEIGHT = 45
+DEFAULT_FONT_SIZE = 14
+DEFAULT_FONT_COLOR = arcade.color.WHITE
+
 
 class SecondPage(arcade.View):
     """ Main application class. """
 
-    def __init__(self, width):
+    def __init__(self, window):
         """
         Initializer
         """
-        super().__init__(width)
+        super().__init__(window)
 
         # Sprite lists
         self.robot_list = None
         self.wall_list = None
         self.target_list = None
         self.number_of_robots = NUMBER_OF_ROBOTS
+        self.reached_target = False
+        self.start_time = None
+        self.time_to_reach_target = None
         self.setup()
 
     def on_show(self):
@@ -99,6 +106,9 @@ class SecondPage(arcade.View):
         # Set the background color
         arcade.set_background_color(arcade.color.AMAZON)
 
+        # Get the time of the beginning of the simulation
+        self.start_time = time.time()
+
     def on_draw(self):
         """
         Render the screen.
@@ -112,11 +122,27 @@ class SecondPage(arcade.View):
         self.robot_list.draw()
         self.target_list.draw()
 
+        # Draw text
+
+        arcade.draw_text(text=f"Stats of the simulation :",
+                         start_x=MAP_WIDTH + 2 * SEMISPRITE_SIZE,
+                         start_y=MAP_HEIGHT - 3 * SPRITE_SIZE,
+                         color=DEFAULT_FONT_COLOR,
+                         font_size=DEFAULT_FONT_SIZE)
+        arcade.draw_text(text=f"Number of robots: {self.number_of_robots}",
+                         start_x=MAP_WIDTH + 2 * SEMISPRITE_SIZE,
+                         start_y=MAP_HEIGHT - 3 * SPRITE_SIZE - DEFAULT_LINE_HEIGHT,
+                         color=DEFAULT_FONT_COLOR,
+                         font_size=DEFAULT_FONT_SIZE)
+        if self.reached_target:
+            arcade.draw_text(text=f"Target reached in {self.time_to_reach_target} sec!",
+                             start_x=MAP_WIDTH + 2 * SEMISPRITE_SIZE,
+                             start_y=MAP_HEIGHT - 3 * SPRITE_SIZE - 2 * DEFAULT_LINE_HEIGHT,
+                             color=DEFAULT_FONT_COLOR,
+                             font_size=DEFAULT_FONT_SIZE)
+
     def on_update(self, delta_time):
         """ Movement and game logic """
-
-        # Get the time of the beginning of the update
-        start_time = time.time()
 
         for robot in self.robot_list:
 
@@ -154,9 +180,10 @@ class SecondPage(arcade.View):
                 for r in self.robot_list:
                     r.change_x = 0
                     r.change_y = 0
-                # Show the duration of the update in a window
-                arcade.draw_text(f"Time: {end_time - start_time:.2f} seconds",
-                                 50, 50, arcade.color.YELLOW, 20)
+                # Store the time it took to reach the target
+                if not self.reached_target:
+                    self.reached_target = True
+                    self.time_to_reach_target = round(end_time - self.start_time, 4)
 
 
 class MainView(arcade.View):
