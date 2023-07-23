@@ -1,8 +1,8 @@
 class Streamlit_config:
     page_config = {
         'layout': "wide",
-        'page_title': "No code AI",
-        'menu_items': {'About': "No-code AI Platform - réalisé par Antonin"}
+        'page_title': "SWARMBOT SIMULATOR",
+        'menu_items': {'About': "SWARMBOT SIMULATOR - réalisé par Antonin"}
     }
     CSS = """
     <style>
