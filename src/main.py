@@ -1,6 +1,8 @@
 import streamlit as st
+
 from config import Streamlit_config
 from map.map import Map
+from swarm.swarm import Swarm
 
 # -- Streamlit configuration
 st.set_page_config(**Streamlit_config.page_config)
@@ -11,7 +13,7 @@ st.markdown('<p class="first_titre">SwarmBot Simulator</p>', unsafe_allow_html=T
 st.markdown("###")
 
 # -- Layout map and parameters
-col_map, _, col_params = st.columns((0.7, 0.05, 0.25))
+col_map, _, col_params = st.columns((0.6, 0.05, 0.35))
 
 # Map
 my_map = Map("Empty_map")
@@ -36,3 +38,5 @@ mid1.subheader(f"Number of robots: `{number_of_robots_slider}`")
 mid1.subheader(f"Map: `{map_selector}`")
 mid2.subheader(f"Policy: `{policy_selector}`")
 mid2.subheader(f"Swarm type: `{swarm_type_selector}`")
+
+s = Swarm(swarm_type_selector, number_of_robots_slider, my_map)

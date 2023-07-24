@@ -1,6 +1,6 @@
+import numpy as np
 import plotly.graph_objects as go
 from plotly.offline import plot
-import numpy as np
 
 
 def generateDiscreteColourScale(colour_set):
@@ -41,6 +41,7 @@ class Map:
         self.map_type = map_type
         self.size = size
         self.map = np.zeros(size)
+        self.swarm = None
         self.colors = ["#1E8449", "#D38730", "#FBFF09"]
         self.create_map()
 
@@ -113,6 +114,14 @@ class Map:
         """
         fig = self.get_plot_map()
         plot(fig, filename='map.html')
+
+    def set_up_swarm(self, swarm):
+        """
+        This function is used to set up the swarm.
+        :param swarm: The swarm to set up.
+        """
+        # TODO
+        self.swarm = swarm
 
 
 if __name__ == "__main__":
