@@ -1,0 +1,4 @@
+streamlit~=1.25.0
+plotly~=5.4.0
+numpy~=1.21.6
+arcade~=2.6.17

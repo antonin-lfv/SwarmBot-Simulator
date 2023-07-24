@@ -7,9 +7,8 @@ class Streamlit_config:
     CSS = """
     <style>
     .first_titre {
-        font-size:75px !important;
+        font-size:60px;
         font-weight: bold;
-        box-sizing: border-box;
         text-align: center;
         width: 100%;
     }
@@ -17,7 +16,7 @@ class Streamlit_config:
         text-align: justify;
         font-size:20px !important;
     }
-    .grand_titre {
+    .big_title {
         font-size:40px !important;
         font-weight: bold;
         text-align: center;
@@ -27,22 +26,13 @@ class Streamlit_config:
         width: 100%;
     }
     .section{
-        font-size:20px !important;
+        font-size:40px !important;
         font-weight: bold;
         text-align: center;
-        text-decoration: underline;
-        text-decoration-color: #111111;
-        text-decoration-thickness: 3px;
     }
-    .petite_section{
+    .little_section{
         font-size:16px !important;
         font-weight: bold;
-    }
-    .nom_colonne_page3{
-        font-size:17px !important;
-        text-decoration: underline;
-        text-decoration-color: #000;
-        text-decoration-thickness: 1px;
     }
     </style>
     """
