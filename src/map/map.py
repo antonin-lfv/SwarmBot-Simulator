@@ -78,7 +78,7 @@ class Map:
         """
         colorscale = generateDiscreteColourScale([self.colors])
         fig = go.Figure(data=go.Heatmap(
-            z=self.get_map(),
+            z=self.map,
             colorscale=colorscale,
             showscale=False))
         fig.update_yaxes(autorange="reversed", visible=False)
@@ -122,6 +122,20 @@ class Map:
         """
         # TODO
         self.swarm = swarm
+
+    def is_position_valid(self, position):
+        """
+        This function is used to check if a position is valid.
+        :param position: The position to check as a tuple (x, y).
+        :return: True if the position is valid, False otherwise.
+        """
+        x, y = position
+
+        # Check if we are inside the map and not on an obstacle
+        if 0 <= x < self.size[0] and 0 <= y < self.size[1] and self.map[x, y] != 1:
+            return True
+
+        return False
 
 
 if __name__ == "__main__":

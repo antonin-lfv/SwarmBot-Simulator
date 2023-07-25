@@ -2,7 +2,7 @@ import streamlit as st
 
 from config import Streamlit_config
 from map.map import Map
-from swarm.swarm import Swarm
+from swarm.robot import Robot
 
 # -- Streamlit configuration
 st.set_page_config(**Streamlit_config.page_config)
@@ -27,6 +27,8 @@ number_of_robots_slider = col_params.number_input("Number of robots", min_value=
 swarm_type_selector = col_params.selectbox("Swarm type", ["Random_swarm"])
 col_params.divider()
 start_simulation_button = col_params.button("Start simulation")
+if start_simulation_button:
+    st.toast("Simulation started !")
 
 st.write("###")
 st.divider()
@@ -39,4 +41,4 @@ mid1.subheader(f"Map: `{map_selector}`")
 mid2.subheader(f"Policy: `{policy_selector}`")
 mid2.subheader(f"Swarm type: `{swarm_type_selector}`")
 
-s = Swarm(swarm_type_selector, number_of_robots_slider, my_map)
+r = Robot("Robot_1", (1, 1), "up_left", 5)
