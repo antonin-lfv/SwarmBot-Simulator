@@ -81,6 +81,20 @@ class Map:
             z=self.map,
             colorscale=colorscale,
             showscale=False))
+        # Add scatter points for the robots, with symbol = "cross"
+        if self.swarm is not None:
+            x, y = zip(*self.swarm.get_positions())
+            fig.add_trace(go.Scatter(
+                x=x,
+                y=y,
+                mode='markers',
+                marker=dict(
+                    size=10,
+                    color="black",
+                    symbol="cross"
+                ),
+                showlegend=False
+            ))
         fig.update_yaxes(autorange="reversed", visible=False)
         fig.update_xaxes(visible=False)
         fig.update_layout(
@@ -120,8 +134,21 @@ class Map:
         This function is used to set up the swarm.
         :param swarm: The swarm to set up.
         """
-        # TODO
         self.swarm = swarm
+        # Set the position of the robots
+        if self.swarm.swarm_type == "Random_swarm":
+            # Set a random position for each robot
+            for robot in self.swarm.get_robots():
+                position = self.get_random_valid_position()
+                robot.set_position(position)
+        else:
+            raise ValueError("The swarm type is not recognized.")
+
+    def move_swarm(self):
+        """
+        This function is used to move the swarm.
+        """
+        self.swarm.move(self)
 
     def is_position_valid(self, position):
         """
@@ -132,10 +159,21 @@ class Map:
         x, y = position
 
         # Check if we are inside the map and not on an obstacle
-        if 0 <= x < self.size[0] and 0 <= y < self.size[1] and self.map[x, y] != 1:
-            return True
+        if 0 <= x < self.size[1] and 0 <= y < self.size[0]:
+            if self.map[x, y] != 1:
+                return True
 
         return False
+
+    def get_random_valid_position(self):
+        """
+        This function is used to get a random valide position.
+        :return: A random valide position.
+        """
+        position = (np.random.randint(1, self.size[0] - 1), np.random.randint(1, self.size[1] - 1))
+        while not self.is_position_valid(position):
+            position = (np.random.randint(1, self.size[0] - 1), np.random.randint(1, self.size[1] - 1))
+        return position
 
 
 if __name__ == "__main__":

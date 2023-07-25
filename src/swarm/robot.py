@@ -46,6 +46,18 @@ class Robot:
     def get_path(self):
         return self.path
 
+    def set_position(self, position):
+        self.position = position
+
+    def set_direction(self, direction):
+        self.direction = direction
+
+    def set_velocity(self, velocity):
+        self.velocity = velocity
+
+    def set_robot_type(self, robot_type):
+        self.robot_type = robot_type
+
     def move(self, map_object):
         """
         Move the robot according to the direction, the velocity and the map
@@ -55,6 +67,9 @@ class Robot:
 
         # Map directions to coordinate changes
         directions = Robot_config.directions
+
+        assert self.position is not None, "The robot position is not defined."
+        assert self.direction is not None, "The robot direction is not defined."
 
         x, y = self.position
         dx, dy = directions[self.direction]
